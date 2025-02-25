@@ -3,97 +3,92 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registration Form</title>
-    
+    <title>GA4 Event & Conversion Tracking</title>
 
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-GCLB1T9MB3"></script>
+    <!-- Google Analytics (GA4) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
     <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
 
-    gtag('config', 'G-GCLB1T9MB3');
+        // Replace G-XXXXXXXXXX with your GA4 Measurement ID
+        gtag('config', 'G-XXXXXXXXXX');
     </script>
-
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-        }
-        .container {
-            background: #fff;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            width: 300px;
-            text-align: center;
-        }
-        h2 {
-            margin-bottom: 20px;
-        }
-        label {
-            display: block;
-            text-align: left;
-            margin-bottom: 5px;
-            font-weight: bold;
-        }
-        input {
-            width: 100%;
-            padding: 8px;
-            margin-bottom: 15px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            font-size: 16px;
-        }
-        #register-button {
-            width: 100%;
-            padding: 10px;
-            background-color: #28a745;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            font-size: 18px;
-            cursor: pointer;
-        }
-        #register-button:hover {
-            background-color: #218838;
-        }
-    </style>
 </head>
 <body>
 
-    <div class="container">
-        <h2>Registration Form</h2>
-        <form>
-            <label for="name">Name:</label>
-            <input type="text" id="name" name="name" placeholder="Enter your name" required>
+    <h1>GA4 Event & Conversion Tracking</h1>
+    <p>Click buttons below to test different Google Analytics events.</p>
 
-            <label for="email">Email:</label>
-            <input type="email" id="email" name="email" placeholder="Enter your email" required>
+    <!-- Button Click Event -->
+    <button onclick="trackButtonClick()">Click Me!</button>
 
-            <label for="phone">Phone:</label>
-            <input type="tel" id="phone" name="phone" placeholder="Enter your phone number" required>
+    <!-- Registration Form -->
+    <form onsubmit="trackFormSubmission(event)">
+        <label for="email">Enter your email:</label>
+        <input type="email" id="email" name="email" required>
+        <button type="submit">Register</button>
+    </form>
 
-            <button id="register-button">Register</button>
+    <!-- Add to Cart -->
+    <button onclick="trackAddToCart()">Add to Cart</button>
 
-        </form>
-    </div>
+    <!-- Purchase Event -->
+    <button onclick="trackPurchase()">Complete Purchase</button>
 
     <script>
-        document.getElementById("register-button").addEventListener("click", function() {
-            gtag("event", "register_click", {
-                event_category: "engagement",
-                event_label: "Register Button",
+        // Track Button Click
+        function trackButtonClick() {
+            gtag('event', 'button_click', {
+                'event_category': 'User Interaction',
+                'event_label': 'Test Button',
+                'value': 1
             });
-            alert("Event Registered");
-        });
-        </script>
+            alert('Button Click Event Sent!');
+        }
+
+        // Track Form Submission (Registration)
+        function trackFormSubmission(event) {
+            event.preventDefault(); // Prevent actual form submission
+            
+            let email = document.getElementById('email').value;
+            
+            gtag('event', 'registration', {
+                'event_category': 'User Signup',
+                'event_label': 'Form Submission',
+                'value': 1,
+                'email': email
+            });
+
+            alert('Registration Event Sent!');
+        }
+
+        // Track Add to Cart
+        function trackAddToCart() {
+            gtag('event', 'add_to_cart', {
+                'event_category': 'Ecommerce',
+                'event_label': 'Add Product',
+                'value': 1,
+                'currency': 'USD',
+                'items': [{ id: 'P123', name: 'Sample Product', price: 50 }]
+            });
+            alert('Add to Cart Event Sent!');
+        }
+
+        // Track Purchase (Conversion Event)
+        function trackPurchase() {
+            gtag('event', 'purchase', {
+                'event_category': 'Ecommerce',
+                'event_label': 'Order Completed',
+                'value': 100,
+                'currency': 'USD',
+                'transaction_id': 'T12345',
+                'items': [{ id: 'P123', name: 'Sample Product', price: 50 }]
+            });
+            alert('Purchase Event (Conversion) Sent!');
+        }
+    </script>
 
 </body>
 </html>
